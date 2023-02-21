@@ -5,21 +5,27 @@ import Login from "../Pages/Login"
 import Home from '../Pages/Admin/Home';
 import Userhome from '../Pages/User/Home';
 import Userprofile from '../Pages/User/Profile';
+import { AuthProvider } from "../Context/AuthContext";
+import Logout from '../Pages/Logout/logout';
 
 
 const router = () => {
   return (
 
     <>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/adminhome" element={<Home />} />
-        <Route path="/userhome" element={<Userhome />} />
-        <Route path="/userprofile" element={<Userprofile />} />
+      <AuthProvider>
 
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/adminhome" element={<Home />} />
+          <Route path="/userhome" element={<Userhome />} />
+          <Route path="/userprofile" element={<Userprofile />} />
+          <Route path="/logout" element={<Logout />} />
 
-      </Routes>
+        </Routes >
+      </AuthProvider>
+
     </>
   )
 

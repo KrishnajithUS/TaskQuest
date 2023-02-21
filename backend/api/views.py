@@ -11,6 +11,7 @@ User = get_user_model()
 
 
 class RegisterUserView(generics.CreateAPIView):
+    # print("this api")
     permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = RegistrationSerializer
@@ -23,16 +24,23 @@ class LoginView(ObtainAuthToken):
         # implementing Custom Serializer
         serializer = AuthTokenSerializer(data=request.data,
                                          context={'request': request})
-
         serializer.is_valid(raise_exception=True)
+        
+        print(serializer.errors)
+
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            'token': token.key,
+        context = {
             'user_id': user.pk,
             'email': user.email,
             'first_name': user.first_name,
             'last_name': user.last_name
+        }
+        return Response({
+            'token': token.key,
+            'is_admin': user.is_admin,
+            'context': context
+
         })
 # Create app
 
