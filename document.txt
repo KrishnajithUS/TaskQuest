@@ -1,0 +1,5 @@
+1)create Django project
+2)create React Project
+3)implement react router
+docs:
+https://www.w3schools.com/react/react_router.asp
