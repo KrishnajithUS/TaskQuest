@@ -9,7 +9,7 @@ const useAxios = () => {
     const token = localStorage.getItem("AuthToken") ? (localStorage.getItem("AuthToken")) : null
     const axiosinstance = axios.create({
         baseURL,
-        timeout: 5000,
+      
         headers: {
             Authorization: token ? `Bearer ${token}` : null
         },

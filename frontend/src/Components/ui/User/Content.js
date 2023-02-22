@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
+import "./User.css"
 import useAxios from '../../../Axios/AxiosInstance/useAxios'
+import { useNavigate } from 'react-router-dom'
+import ShowImage from './ShowImage'
+import DropBox from './DropBox'
 const Content = () => {
+    const navigate = useNavigate()
     const [listapp, setListApp] = useState([])
     const [singleData, setSingleData] = useState([])
     const axiosinstance = useAxios()
@@ -20,7 +25,45 @@ const Content = () => {
     useEffect(() => {
         response()
     }, [])
+    const [images, setImages] = useState([]);
+    const [imageSent, setImageSent] = useState([]);
+
+    const onDrop = useCallback((acceptedFiles) => {
+        acceptedFiles.map((file, index) => {
+            setImageSent(file)
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                setImages((prevState) => [
+                    { id: index, src: e.target.result },
+                ]);
+            };
+            reader.readAsDataURL(file);
+            return file;
+        });
+    }, []);
+    const ImageUploader = async () => {
+        try {
+            const formData = new FormData()
+            formData.append("id", singleData.id)
+            const value = await axiosinstance.post(`/addappview/`,
+                formData
+            )
+            console.log(value.data)
+                
+            alert("Task Completed")
+            navigate(0)
+            
+        } catch (err) {
+            alert(err)
+        }
+    }
+    const ImageHandler = (e) => {
+        e.preventDefault()
+        console.log(imageSent, "image sent")
+        ImageUploader()
+    }
     if (singleData.id) {
+
         return (
             <div className='flex flex-col bg-slate-700 ' >
 
@@ -29,6 +72,9 @@ const Content = () => {
                     <div className='flex flex   justify-between items-center '>
                         <div className='w-full mt-10 flex flex-col justify-center items-center'>
                             <img className='object-cover w-[full] h-[100px]' alt='img' src={`${singleData.image}`} />
+                            <div>
+                                <span>{singleData.name}</span>
+                            </div>
                             <div className='text-center'>
                                 <a className='text-sm hover:text-green-500' href={singleData.link}>{singleData.link}</a>
                             </div>
@@ -42,8 +88,15 @@ const Content = () => {
                         </div>
                     </div>
                 </div>
+                <DropBox onDrop={onDrop} />
+                <ShowImage images={images} />
+                <form onSubmit={(e)=>ImageHandler(e)
+                }>
+                    <div className='flex justify-center m-4' >
+                        <button type="submit" className="md:w-[50%]  w-[80%] border border-white py-2 px-5 hover:font-bold bg-green-600 hover:bg-green-800 text-sm md:text-xl text-center" type="submit" >Submit Task</button>
 
-
+                    </div>
+                </form>
 
 
             </div>
