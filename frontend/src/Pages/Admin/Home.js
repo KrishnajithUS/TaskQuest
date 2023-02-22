@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from '../../Components/ui/Admin/Sidebar'
 import Content from '../../Components/ui/Admin/Content'
+import ListApps from '../../Components/ui/Admin/ListApps'
 
 const Home = () => {
+    const [show, setshow] = useState(null)
+    console.log(show)
     return (
         <div className='min-h-screen bg-slate-900 text-white '>
             <div className='md:p-4 p-10'>
@@ -12,12 +15,22 @@ const Home = () => {
 
                 <div className='w-full'>
                     <div className='grid grid-cols-8 gap-4 '>
+
                         <div className='md:col-start-1  md:col-end-3 col-start-3 col-end-7'>
-                            <Sidebar />
+                            <Sidebar show={show} setshow={setshow} />
                         </div>
-                        <div className=' col-span-full md:col-start-3 md:col-end-9 bg-slate-600'>
-                            <Content />
-                        </div>
+                        {show === "listapps" ?
+                            <div className=' col-span-full md:col-start-3 md:col-end-9 bg-slate-600'>
+                                <ListApps />
+
+
+                            </div>
+                            :
+
+                            <div className=' col-span-full md:col-start-3 md:col-end-9 bg-slate-600'>
+                                <Content />
+                            </div>}
+
                     </div>
                 </div>
             </div>

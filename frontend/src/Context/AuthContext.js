@@ -13,7 +13,7 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
     const [authTokens, setAuthTokens] = useState(() => {
-        localStorage.getItem("AuthTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null
+        localStorage.getItem("AuthTokens") ? JSON.parse(localStorage.getItem("AuthTokens")) : null
     })
     const [user, setUser] = useState(() =>
         localStorage.getItem("AuthTokens")

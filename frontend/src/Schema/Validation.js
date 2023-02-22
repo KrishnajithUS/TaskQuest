@@ -5,7 +5,7 @@ const signUpSchema = Yup.object({
       .max(25)
       .required('Please enter your first name'),
     last_name: Yup.string()
-      .min(2, 'Last name must be atleat two characters')
+      .min(1, 'Last name must be atleat two characters')
       .typeError('first name must be atleast two characters')
       .max(25)
       .required('Please enter your last name'),

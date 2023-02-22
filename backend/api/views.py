@@ -25,7 +25,7 @@ class LoginView(ObtainAuthToken):
         serializer = AuthTokenSerializer(data=request.data,
                                          context={'request': request})
         serializer.is_valid(raise_exception=True)
-        
+
         print(serializer.errors)
 
         user = serializer.validated_data['user']
@@ -34,7 +34,9 @@ class LoginView(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email,
             'first_name': user.first_name,
-            'last_name': user.last_name
+            'last_name': user.last_name,
+            'is_admin': user.is_admin
+
         }
         return Response({
             'token': token.key,

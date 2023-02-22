@@ -5,8 +5,8 @@ const baseURL = 'http://127.0.0.1:8000/api/'
 
 
 const useAxios = () => {
-    const token = localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null
 
+    const token = localStorage.getItem("AuthToken") ? (localStorage.getItem("AuthToken")) : null
     const axiosinstance = axios.create({
         baseURL,
         timeout: 5000,
