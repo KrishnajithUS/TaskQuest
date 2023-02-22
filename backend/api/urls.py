@@ -5,5 +5,7 @@ urlpatterns = [
     path('loginview/', views.LoginView.as_view()),
     path('createview/', views.CreateAppView.as_view()),
     path('listview/', views.ListAppView.as_view()),
+    path('addappview/', views.AddAppView.as_view()),
+
 
 ]

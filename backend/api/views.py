@@ -61,22 +61,25 @@ class ListAppView(generics.ListAPIView):
     serializer_class = AppSerializer
 
     def get_queryset(self):
-        return App.objects.filter(task_completed=False)
+        return App.objects.exclude(appadded__user=self.request.user, appadded__task_completed=True)
 
 
 class AddAppView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        app = App.objects.get(pk=request.data.get("id"))
-        if app is not None:
-            serializer = AppAddedSerializer(data=request.data)
+        print(request.data.get("id"))
+        app_id = request.data.get("id")
+        # context = {"request": request.data}
+        # app = App.objects.get(pk=context["request"].id)
+        # print(app)
+        serializer = AppAddedSerializer(
+            data=request.data,  context={"request": request, "app_id": app_id})
         # obj = AddApp.objects.create(user=request.user, app=app)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid():
             serializer.save()
-            app.taskcompleted = True
-            app.save()
             return Response(status=status.HTTP_201_CREATED)
+        print("serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -85,7 +88,7 @@ class TaskCompleted(generics.ListAPIView):
     serializer_class = AppSerializer
 
     def get_queryset(self):
-        return App.objects.filter(taskcompleted=True)
+        return App.objects.filter(appadded__user=self.request.user, appadded__task_completed=True)
 
 
 class TotalPoints(APIView):

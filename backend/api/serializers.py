@@ -32,7 +32,7 @@ class AuthTokenSerializer(serializers.Serializer):
         if email and password:
             user = authenticate(request=self.context.get('request'),
                                 email=email, password=password)
-            print(user,"user")
+            print(user, "user")
             # The authenticate call simply returns None for is_active=False
             # users. (Assuming the default ModelBackend authentication
             # backend.)
@@ -52,12 +52,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["email", "first_name", "last_name", "password"]
-    def create(self,validated_data):
+
+    def create(self, validated_data):
         user = User.objects.create(**validated_data)
         user.set_password(validated_data["password"])
         user.save()
         return user
-        
+
 
 class AppSerializer(serializers.ModelSerializer):
     """App Serializer"""
@@ -70,4 +71,17 @@ class AppSerializer(serializers.ModelSerializer):
 class AppAddedSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppAdded
-        fields = "__all__"
+        fields = ["user", "app", "screenshot"]
+        extra_kwargs = {'user': {'required': False},
+                        'app': {'required': False}}
+
+    def create(self, validated_data):
+
+        app_id = self.context.get("app_id")
+        app = App.objects.get(pk=app_id)
+        user = self.context["request"].user
+
+        app_added = AppAdded(user=user, app=app, **validated_data)
+        app_added.task_completed = True
+        app_added.save()
+        return app_added

@@ -7,14 +7,13 @@ User = get_user_model()
 
 class App(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     link = models.URLField()
     category = models.CharField(max_length=50)
     image = models.ImageField(
         upload_to='screenshots', blank=True, null=True)
     sub_category = models.CharField(max_length=50)
-    points = models.IntegerField(blank=True,null=True)
-    task_completed = models.BooleanField(default=False)
+    points = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -28,6 +27,8 @@ class App(models.Model):
 
 class AppAdded(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    app = models.OneToOneField(App, on_delete=models.CASCADE)
+    app = models.ForeignKey(App, on_delete=models.CASCADE)
     screenshot = models.ImageField(
-        upload_to='screenshots', blank=True, null=True)
+        upload_to='screenshots',default='secreenshots/default.png')
+    task_completed = models.BooleanField(default=False)
+
