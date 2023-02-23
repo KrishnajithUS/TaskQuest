@@ -101,3 +101,10 @@ class TotalPoints(APIView):
             user=request.user, task_completed=True)
         total_point = sum(lst.app.points for lst in list_of_app)
         return Response({"total_points": total_point}, status=status.HTTP_200_OK)
+class LogOut(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self,request):
+        request.user.auth_token.delete()
+
+        return Response({"success": "Successfully logged out."},
+                    status=status.HTTP_200_OK)

@@ -8,6 +8,8 @@ urlpatterns = [
     path('addappview/', views.AddAppView.as_view()),
     path('taskview/', views.TaskCompleted.as_view()),
     path('totalpoints/', views.TotalPoints.as_view()),
+    path('logout/', views.LogOut.as_view()),
+
 
 
 
