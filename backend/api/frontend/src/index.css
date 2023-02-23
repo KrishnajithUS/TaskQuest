@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* this will set the global font for the website  */
+@layer base{
+  html{
+    font-family:DM Mono,monospace ;
+  }
+}
