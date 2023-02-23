@@ -14,7 +14,7 @@ password : admin
 * User can view their Completed tasks
 * User can view their total Points
 ## Backend Setup
-1. Clone the resporitory: `git clone https://github.com/KrishnajithUS/TaskQuest.git'
+1. Clone the resporitory: `git clone https://github.com/KrishnajithUS/TaskQuest.git`
 2. Change current directory to `backend` folder:`cd backend`
 3. Create a virutal environment and install all backend dependencies with pipenv: `pip install requirements.txt`.
 4. Activate virtual environment :`source env/bin/activate`
