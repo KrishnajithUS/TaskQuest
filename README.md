@@ -1,18 +1,18 @@
 # Django-React-TaskQuest Application
 The website enables the administrator to create new applications and assign tasks to users. Users can view these tasks and earn points by downloading the assigned app, completing the task, and uploading a screenshot.
-#Admin Login Credentials
+# Admin Login Credentials
 email : admin@gmail.com
 password : admin
 ### Features
 * Login/Registration
-*Token Authentication
-*Create New Apps and Upload Images
-*List All the Apps
-*User Profile
-*User can View the tasks
-*User can upload The ScreenShot(Drag and Drop enabled)
-*User can view their Completed tasks
-*User can view their total Points
+* Token Authentication
+* Create New Apps and Upload Images
+* List All the Apps
+* User Profile
+* User can View the tasks
+* User can upload The ScreenShot(Drag and Drop enabled)
+* User can view their Completed tasks
+* User can view their total Points
 ## Backend Setup
 1. Clone the resporitory: `git clone https://github.com/KrishnajithUS/TaskQuest.git'
 2. Change current directory to `backend` folder:`cd backend`
