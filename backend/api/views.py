@@ -88,6 +88,8 @@ class TaskCompleted(generics.ListAPIView):
     serializer_class = AppSerializer
 
     def get_queryset(self):
+        print(App.objects.filter(appadded__user=self.request.user,
+              appadded__task_completed=False))
         return App.objects.filter(appadded__user=self.request.user, appadded__task_completed=True)
 
 
@@ -95,6 +97,7 @@ class TotalPoints(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        list_of_app = AppAdded.objects.filter(user=request.user)
+        list_of_app = AppAdded.objects.filter(
+            user=request.user, task_completed=True)
         total_point = sum(lst.app.points for lst in list_of_app)
         return Response({"total_points": total_point}, status=status.HTTP_200_OK)

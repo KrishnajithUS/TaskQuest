@@ -3,6 +3,7 @@ import Sidebar from '../../Components/ui/User/Sidebar'
 import Content from '../../Components/ui/User/Content'
 import Profile from '../../Components/ui/User/Profile'
 import Task from '../../Components/ui/User/Task'
+import Points from '../../Components/ui/User/Points'
 const Home = () => {
     const [show, setshow] = useState(null)
 
@@ -29,8 +30,11 @@ const Home = () => {
                                     <div className=' col-span-full md:col-start-3 md:col-end-9 '>
                                         <Task />
                                     </div>
-                                    :
-                                    ''
+                                    : show === "points" ?
+                                        <div className=' col-span-full md:col-start-3 md:col-end-9 '>
+                                            <Points />
+                                        </div> :
+                                        ''
                         }
                     </div>
                 </div>

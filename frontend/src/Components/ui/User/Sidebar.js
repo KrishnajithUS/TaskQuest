@@ -12,6 +12,9 @@ const Sidebar = ({ show, setshow }) => {
     const handleSubmitNL = () => {
         setshow('task')
     }
+    const handleSubmitNLL = () => {
+        setshow('points')
+    }
 
     return (
         <>
@@ -28,7 +31,9 @@ const Sidebar = ({ show, setshow }) => {
                 <div onClick={handleSubmitNL} className='border-2 border-white mb-2'>
                     <a href="#" className="px-4 py-2 text-sm block" role="menuitem">Task</a>
                 </div>
-
+                <div onClick={handleSubmitNLL} className='border-2 border-white mb-2'>
+                    <a href="#" className="px-4 py-2 text-sm block" role="menuitem">Points</a>
+                </div>
 
                 <div className='border-2 border-white'>
                     <Link to="/logout" className="px-4 py-2 text-sm block" role="menuitem">Logout</Link>

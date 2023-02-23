@@ -49,10 +49,10 @@ const Content = () => {
                 formData
             )
             console.log(value.data)
-                
+
             alert("Task Completed")
             navigate(0)
-            
+
         } catch (err) {
             alert(err)
         }
@@ -90,7 +90,7 @@ const Content = () => {
                 </div>
                 <DropBox onDrop={onDrop} />
                 <ShowImage images={images} />
-                <form onSubmit={(e)=>ImageHandler(e)
+                <form onSubmit={(e) => ImageHandler(e)
                 }>
                     <div className='flex justify-center m-4' >
                         <button type="submit" className="md:w-[50%]  w-[80%] border border-white py-2 px-5 hover:font-bold bg-green-600 hover:bg-green-800 text-sm md:text-xl text-center" type="submit" >Submit Task</button>
@@ -106,7 +106,7 @@ const Content = () => {
         <div className='flex flex-col bg-slate-900 ' >
 
             {
-                listapp.map((item) => {
+                listapp.length >= 1 ? listapp.map((item) => {
                     return (
                         <div key={item.id} className='flex items-center justify-between px-4 bg-slate-700 w-50 h-[100px] mb-4' >
                             <div className='flex  justify-between items-center '>
@@ -126,7 +126,11 @@ const Content = () => {
                             </div>
                         </div>
                     )
-                })
+                }
+                ) :
+                    <div className='flex text-center mt-10 justify-center items-center text-bold text-4xl'>
+                        <h1>No Task to Complete</h1>
+                    </div>
             }
 
 

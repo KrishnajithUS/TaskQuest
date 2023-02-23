@@ -6,6 +6,9 @@ urlpatterns = [
     path('createview/', views.CreateAppView.as_view()),
     path('listview/', views.ListAppView.as_view()),
     path('addappview/', views.AddAppView.as_view()),
+    path('taskview/', views.TaskCompleted.as_view()),
+    path('totalpoints/', views.TotalPoints.as_view()),
+
 
 
 ]
