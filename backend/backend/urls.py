@@ -16,9 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
 from django.conf import settings
 
 urlpatterns = [
     path("api/", include("api.urls")),
     path("admin/", admin.site.urls),
+    path('docs/',include_docs_urls(title="TaskQuest")),
+    path('schema',get_schema_view(
+        title='TaskQuest',
+        description='Api Documentation'
+    ), name='openap-shcema')
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
