@@ -6,6 +6,8 @@ import Home from '../Pages/Admin/Home';
 import Userhome from '../Pages/User/Home';
 import { AuthProvider } from "../Context/AuthContext";
 import Logout from '../Pages/Logout/logout';
+import AdminPrivate from './Privaterouter/AdminPrivate';
+import UserPrivate from './Privaterouter/UserPrivate';
 
 
 const router = () => {
@@ -17,8 +19,12 @@ const router = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/adminhome" element={<Home />} />
-          <Route path="/userprofile" element={<Userhome />} />
+          <Route element={<AdminPrivate />}>
+            <Route path="/adminhome" element={<Home />} />
+          </Route>
+          <Route element={<UserPrivate />}>
+            <Route path="/userprofile" element={<Userhome />} />
+          </Route>
           <Route path="/logout" element={<Logout />} />
 
         </Routes >

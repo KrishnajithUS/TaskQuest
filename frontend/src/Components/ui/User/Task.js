@@ -14,7 +14,7 @@ const Task = () => {
   }
   useEffect(() => {
     response()
-  })
+  },[])
   return (
     <div className='flex flex-col bg-slate-900 ' >
 
