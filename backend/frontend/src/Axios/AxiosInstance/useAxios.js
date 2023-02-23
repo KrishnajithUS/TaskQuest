@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useContext } from 'react'
 
-const baseURL = 'http://127.0.0.1:8000/api/'
+const baseURL = 'http://44.199.195.231/api/'
 
 
 const useAxios = () => {
