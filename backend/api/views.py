@@ -1,6 +1,7 @@
 from . serializers import RegistrationSerializer, AuthTokenSerializer, AppSerializer, AppAddedSerializer
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth import get_user_model
@@ -19,31 +20,36 @@ class RegisterUserView(generics.CreateAPIView):
 # Overriding the default Token class to add some data to it.
 
 
-class LoginView(ObtainAuthToken):
+class LoginView(APIView):
     def post(self, request, *args, **kwargs):
         # implementing Custom Serializer
-        serializer = AuthTokenSerializer(data=request.data,
-                                         context={'request': request})
-        serializer.is_valid(raise_exception=True)
+        # serializer = AuthTokenSerializer(data=request.data,
+        #                                  context={'request': request})
+        # serializer.is_valid(raise_exception=True)
 
-        print(serializer.errors)
+        # print(serializer.errors)
 
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        context = {
-            'user_id': user.pk,
-            'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'is_admin': user.is_admin
+        # user = serializer.validated_data['user']
+        user = authenticate(email=request.data.get('email'),password=request.data.get("password"))
+        print("userr",user)
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            context = {
+                'user_id': user.pk,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'is_admin': user.is_admin
 
-        }
-        return Response({
-            'token': token.key,
-            'is_admin': user.is_admin,
-            'context': context
+            }
+            return Response({
+                'token': token.key,
+                'is_admin': user.is_admin,
+                'context': context
 
-        })
+            })
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 # Create app
 
 
@@ -61,6 +67,7 @@ class ListAppView(generics.ListAPIView):
     serializer_class = AppSerializer
 
     def get_queryset(self):
+        print(self.request.user)
         return App.objects.exclude(appadded__user=self.request.user, appadded__task_completed=True)
 
 
@@ -101,10 +108,13 @@ class TotalPoints(APIView):
             user=request.user, task_completed=True)
         total_point = sum(lst.app.points for lst in list_of_app)
         return Response({"total_points": total_point}, status=status.HTTP_200_OK)
+
+
 class LogOut(APIView):
     permission_classes = [IsAuthenticated]
-    def post(self,request):
+
+    def post(self, request):
         request.user.auth_token.delete()
 
         return Response({"success": "Successfully logged out."},
-                    status=status.HTTP_200_OK)
+                        status=status.HTTP_200_OK)
